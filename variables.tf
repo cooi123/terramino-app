@@ -27,3 +27,17 @@ variable "app_name" {
   type        = string
   description = "The name of the application."
 }
+
+variable "aws_access_key" {
+  type        = string
+  description = "AWS access key ID"
+  sensitive   = true
+  default     = null
+}
+
+variable "aws_secret_key" {
+  type        = string
+  description = "AWS secret access key"
+  sensitive   = true
+  default     = null
+}

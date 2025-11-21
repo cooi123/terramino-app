@@ -1,5 +1,11 @@
 # Insert providers here
 terraform {
+  cloud{
+    organization = "transport-demo"
+    workspaces {
+      name = "terramino-app"
+    }
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -10,7 +16,9 @@ terraform {
 
 # Configure the AWS Provider
 provider "aws" {
-  region = var.aws_region
+  region     = var.aws_region
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
 }
 
 # Create a VPC
@@ -93,7 +101,7 @@ resource "aws_route_table_association" "public" {
 resource "aws_instance" "web" {
   ami                         = "ami-0e1a3a59369c81682" 
   instance_type               = "t2.medium"
-  count                       = "1"
+  count                       = "2"
   subnet_id                   = aws_subnet.public.id
   vpc_security_group_ids      = [aws_security_group.web_sg.id]
   associate_public_ip_address = true
